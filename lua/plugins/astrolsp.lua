@@ -68,7 +68,10 @@ return {
       vue_ls = {
         init_options = {
           vue = {
-            hybridMode = false,
+            hybridMode = true,
+          },
+          typescript = {
+            tsdk = vim.fn.stdpath("data") .. "/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib"
           },
         },
         settings = {
@@ -79,20 +82,29 @@ return {
         filetypes = { "vue" }, -- Kembalikan ke default agar tidak berebut file murni .ts/.js
       },
       vtsls = {
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
         settings = {
           vtsls = {
             enableMoveToFileCodeAction = true,
-            autoUseWorkspaceTsdk = true,
+            autoUseWorkspaceTsdk = false,
             experimental = {
               completion = {
                 enableServerSideFuzzyMatch = true,
               },
             },
             documentHighlight = { enabled = false },
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = "@vue/typescript-plugin",
+                  location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/typescript-plugin",
+                  enableForWorkspaceTypeScriptVersions = false,
+                },
+              },
+            },
           },
           typescript = {
-            tsdk = "node_modules/typescript/lib",
+            tsdk = vim.fn.stdpath("data") .. "/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib",
             inlayHints = {
               enumMemberValues = { enabled = true },
               functionLikeReturnTypes = { enabled = true },
