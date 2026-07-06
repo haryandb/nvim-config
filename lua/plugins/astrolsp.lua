@@ -68,43 +68,26 @@ return {
       vue_ls = {
         init_options = {
           vue = {
-            hybridMode = true,
-          },
-          typescript = {
-            tsdk = vim.fn.stdpath("data") .. "/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib"
+            hybridMode = false,
           },
         },
-        settings = {
-          vue = {
-            complete = { casing = { props = "camel" } },
-          },
-        },
-        filetypes = { "vue" }, -- Kembalikan ke default agar tidak berebut file murni .ts/.js
+        filetypes = { "vue" },
       },
       vtsls = {
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
         settings = {
           vtsls = {
             enableMoveToFileCodeAction = true,
-            autoUseWorkspaceTsdk = false,
+            autoUseWorkspaceTsdk = true,
             experimental = {
               completion = {
                 enableServerSideFuzzyMatch = true,
               },
             },
             documentHighlight = { enabled = false },
-            tsserver = {
-              globalPlugins = {
-                {
-                  name = "@vue/typescript-plugin",
-                  location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/typescript-plugin",
-                  enableForWorkspaceTypeScriptVersions = false,
-                },
-              },
-            },
           },
           typescript = {
-            tsdk = vim.fn.stdpath("data") .. "/mason/packages/vtsls/node_modules/@vtsls/language-server/node_modules/typescript/lib",
+            tsdk = "node_modules/typescript/lib",
             inlayHints = {
               enumMemberValues = { enabled = true },
               functionLikeReturnTypes = { enabled = true },
@@ -157,6 +140,9 @@ return {
     on_attach = function(client, bufnr)
       if client.name == "vtsls" then
         client.server_capabilities.documentHighlightProvider = false
+      end
+      if client.name == "vue_ls" then
+        client.handlers["tsserver/request"] = function() end
       end
     end,
   },
