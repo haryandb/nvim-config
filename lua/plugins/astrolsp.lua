@@ -31,7 +31,8 @@ return {
       timeout_ms = 20000,
     },
     servers = {
-      "vtsls", -- Kita pertahankan vtsls karena performanya jauh lebih baik untuk Vue Hybrid
+      "vtsls",
+      "ts_ls",
       "vue_ls",
       "intelephense",
       "rust_analyzer",
@@ -78,11 +79,11 @@ return {
         filetypes = { "vue" }, -- Kembalikan ke default agar tidak berebut file murni .ts/.js
       },
       vtsls = {
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
         settings = {
           vtsls = {
             enableMoveToFileCodeAction = true,
-            autoUseWorkspaceTsdk = false,
+            autoUseWorkspaceTsdk = true,
             experimental = {
               completion = {
                 enableServerSideFuzzyMatch = true,
@@ -91,6 +92,7 @@ return {
             documentHighlight = { enabled = false },
           },
           typescript = {
+            tsdk = "node_modules/typescript/lib",
             inlayHints = {
               enumMemberValues = { enabled = true },
               functionLikeReturnTypes = { enabled = true },
