@@ -9,6 +9,34 @@ return {
 
   -- == Examples of Adding Plugins ==
 
+  {
+    "karb94/neoscroll.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("neoscroll").setup {
+        easing_function = "quadratic",
+        hide_cursor = true,
+        stop_eof = true,
+        respect_scrolloff = true,
+        cursor_scrolls_alone = true,
+        performance_mode = false,
+      }
+    end,
+  },
+
+  {
+    "AstroNvim/astrocore",
+    ---@type AstroCoreOpts
+    opts = {
+      mappings = {
+        n = {
+          ["<S-h>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
+          ["<S-l>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
+        },
+      },
+    },
+  },
+
   "andweeb/presence.nvim",
   {
     "ray-x/lsp_signature.nvim",
