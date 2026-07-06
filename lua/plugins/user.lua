@@ -25,6 +25,35 @@ return {
   },
 
   {
+    "folke/snacks.nvim",
+    opts = {
+      picker = {
+        sources = {
+          explorer = { auto_close = true },
+        },
+        formatters = {
+          file = { filename_first = true },
+        },
+      },
+    },
+    keys = {
+      { "<Leader><Leader>", function() require("snacks").picker.resume() end, desc = "Resume picker" },
+      { "<Leader>ff", function() require("snacks").picker.files() end, desc = "Find files" },
+      { "<Leader>fg", function() require("snacks").picker.grep() end, desc = "Live grep" },
+      { "<Leader>fb", function() require("snacks").picker.buffers() end, desc = "Buffers" },
+      { "<Leader>fh", function() require("snacks").picker.help() end, desc = "Help tags" },
+      { "<Leader>f:", function() require("snacks").picker.command_history() end, desc = "Command history" },
+      { "<Leader>f.", function() require("snacks").picker.recent() end, desc = "Recent files" },
+      { "<Leader>fk", function() require("snacks").picker.keymaps() end, desc = "Keymaps" },
+      { "<Leader>f/", function() require("snacks").picker.search_history() end, desc = "Search history" },
+      { "<Leader>fs", function() require("snacks").picker.lsp_symbols() end, desc = "LSP symbols" },
+      { "<Leader>fS", function() require("snacks").picker.lsp_workspace_symbols() end, desc = "LSP workspace symbols" },
+      { "<Leader>fr", function() require("snacks").picker.resume() end, desc = "Resume" },
+      { "<Leader>fo", function() require("snacks").picker.icons() end, desc = "Icons" },
+    },
+  },
+
+  {
     "AstroNvim/astrocore",
     ---@type AstroCoreOpts
     opts = {
@@ -34,6 +63,32 @@ return {
           ["<S-l>"] = { function() require("astrocore.buffer").nav(vim.v.count1) end, desc = "Next buffer" },
         },
       },
+    },
+  },
+
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+  },
+
+  {
+    "kevinhwang91/nvim-ufo",
+    event = "VeryLazy",
+    dependencies = { "kevinhwang91/promise-async" },
+    keys = {
+      { "zR", false },
+      { "zM", false },
+      { "zR", function() require("ufo").openAllFolds() end, desc = "Open all folds" },
+      { "zM", function() require("ufo").closeAllFolds() end, desc = "Close all folds" },
+      { "K", function()
+        local winid = require("ufo").peekFoldedLinesUnderCursor()
+        if not winid then vim.lsp.buf.hover() end
+      end, desc = "Peek fold / LSP hover" },
+    },
+    opts = {
+      provider_selector = function()
+        return { "treesitter", "indent" }
+      end,
     },
   },
 
