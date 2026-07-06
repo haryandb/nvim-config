@@ -1,4 +1,4 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
+-- if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
 
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- PLEASE REMOVE THE EXAMPLES YOU HAVE NO INTEREST IN BEFORE ENABLING THIS FILE
@@ -55,6 +55,143 @@ return {
 
       -- include the default astronvim config that calls the setup call
       require "astronvim.plugins.configs.luasnip"(plugin, opts)
+
+      -- Vue 3 Composition API snippets
+      luasnip.add_snippets("vue", {
+        luasnip.snippet("vsetup", {
+          luasnip.text_node("<script setup lang=\"ts\">"),
+          luasnip.insert_node(1),
+          luasnip.text_node("\n</script>\n\n<template>"),
+          luasnip.insert_node(2),
+          luasnip.text_node("\n</template>\n\n<style scoped>"),
+          luasnip.insert_node(3),
+          luasnip.text_node("\n</style>"),
+        }),
+        luasnip.snippet("vref", {
+          luasnip.text_node("const "),
+          luasnip.insert_node(1, "val"),
+          luasnip.text_node(" = ref<"),
+          luasnip.insert_node(2, "type"),
+          luasnip.text_node(">("),
+          luasnip.insert_node(3),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("vcomputed", {
+          luasnip.text_node("const "),
+          luasnip.insert_node(1, "val"),
+          luasnip.text_node(" = computed(() => "),
+          luasnip.insert_node(2),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("vprops", {
+          luasnip.text_node("const props = defineProps<{"),
+          luasnip.insert_node(1),
+          luasnip.text_node("}>()"),
+        }),
+        luasnip.snippet("vemit", {
+          luasnip.text_node("const emit = defineEmits<{"),
+          luasnip.insert_node(1),
+          luasnip.text_node("}>()"),
+        }),
+        luasnip.snippet("vamounted", {
+          luasnip.text_node("onMounted(() => "),
+          luasnip.insert_node(1),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("vwatch", {
+          luasnip.text_node("watch(() => "),
+          luasnip.insert_node(1, "source"),
+          luasnip.text_node(", ("),
+          luasnip.insert_node(2, "val"),
+          luasnip.text_node(") => "),
+          luasnip.insert_node(3),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("vreactive", {
+          luasnip.text_node("const "),
+          luasnip.insert_node(1, "state"),
+          luasnip.text_node(" = reactive<"),
+          luasnip.insert_node(2, "type"),
+          luasnip.text_node(">({"),
+          luasnip.insert_node(3),
+          luasnip.text_node("})"),
+        }),
+      })
+
+      -- Inertia.js snippets
+      luasnip.add_snippets("vue", {
+        luasnip.snippet("ilink", {
+          luasnip.text_node("<Link href=\""),
+          luasnip.insert_node(1),
+          luasnip.text_node("\""),
+          luasnip.insert_node(2),
+          luasnip.text_node(">"),
+          luasnip.insert_node(3),
+          luasnip.text_node("</Link>"),
+        }),
+        luasnip.snippet("irget", {
+          luasnip.text_node("router.get(\""),
+          luasnip.insert_node(1),
+          luasnip.text_node("\", "),
+          luasnip.insert_node(2),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("irpost", {
+          luasnip.text_node("router.post(\""),
+          luasnip.insert_node(1),
+          luasnip.text_node("\", "),
+          luasnip.insert_node(2),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("iform", {
+          luasnip.text_node("const form = useForm({"),
+          luasnip.insert_node(1),
+          luasnip.text_node("})"),
+        }),
+        luasnip.snippet("ipage", {
+          luasnip.text_node("const page = usePage<"),
+          luasnip.insert_node(1),
+          luasnip.text_node(">()"),
+        }),
+      })
+
+      -- Tauri API snippets
+      luasnip.add_snippets("vue", {
+        luasnip.snippet("tinvoke", {
+          luasnip.text_node("await invoke(\""),
+          luasnip.insert_node(1, "command"),
+          luasnip.text_node("\", { "),
+          luasnip.insert_node(2),
+          luasnip.text_node(" })"),
+        }),
+        luasnip.snippet("tlisten", {
+          luasnip.text_node("await listen(\""),
+          luasnip.insert_node(1, "event"),
+          luasnip.text_node("\", (event) => "),
+          luasnip.insert_node(2),
+          luasnip.text_node(")"),
+        }),
+        luasnip.snippet("temit", {
+          luasnip.text_node("await emit(\""),
+          luasnip.insert_node(1, "event"),
+          luasnip.text_node("\", "),
+          luasnip.insert_node(2),
+          luasnip.text_node(")"),
+        }),
+      })
+
+      -- Tauri Rust snippets
+      luasnip.add_snippets("rust", {
+        luasnip.snippet("tcmd", {
+          luasnip.text_node("#[tauri::command]\nfn "),
+          luasnip.insert_node(1, "command_name"),
+          luasnip.text_node("("),
+          luasnip.insert_node(2),
+          luasnip.text_node(") -> Result<(), String> {\n    "),
+          luasnip.insert_node(3),
+          luasnip.text_node("\n}"),
+        }),
+      })
     end,
   },
 

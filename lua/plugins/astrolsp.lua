@@ -31,8 +31,7 @@ return {
       timeout_ms = 20000,
     },
     servers = {
-      "vtsls",
-      "ts_ls",
+      "vtsls", -- Kita pertahankan vtsls karena performanya jauh lebih baik untuk Vue Hybrid
       "vue_ls",
       "intelephense",
       "rust_analyzer",
@@ -43,6 +42,18 @@ return {
       },
       emmet_ls = {
         filetypes = { "html", "blade", "vue", "css", "sass", "scss", "less", "javascriptreact", "typescriptreact" },
+      },
+      tailwindcss = {
+        filetypes = { "html", "blade", "vue", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+        settings = {
+          tailwindCSS = {
+            emmetCompletions = true,
+            includeLanguages = {
+              vue = "html",
+              blade = "html",
+            },
+          },
+        },
       },
       intelephense = {
         settings = {
@@ -56,13 +67,21 @@ return {
       vue_ls = {
         init_options = {
           vue = {
-            hybridMode = false,
+            hybridMode = true,
+          },
+          typescript = {
+            tsdk = vim.fn.stdpath("data") .. "/mason/packages/vtsls/node_modules/typescript/lib"
           },
         },
-        filetypes = { "vue" },
+        settings = {
+          vue = {
+            complete = { casing = { props = "camel" } },
+          },
+        },
+        filetypes = { "vue" }, -- Kembalikan ke default agar tidak berebut file murni .ts/.js
       },
       vtsls = {
-        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx", "vue" },
+        filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
         settings = {
           vtsls = {
             enableMoveToFileCodeAction = true,
