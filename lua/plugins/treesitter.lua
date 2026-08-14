@@ -10,6 +10,8 @@ return {
       ensure_installed = {
         "lua",
         "vim",
+        "php",
+        "blade",
         "vue",
         "javascript",
         "typescript",

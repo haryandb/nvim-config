@@ -25,6 +25,7 @@ return {
       },
       disabled = {
         "volar",
+        "vue_ls",
         "html",
         "emmet_ls",
       },
