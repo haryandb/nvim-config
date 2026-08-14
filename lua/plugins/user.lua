@@ -7,6 +7,46 @@
 ---@type LazySpec
 return {
 
+  -- == Laravel & Blade Plugins ==
+
+  {
+    "adalessa/laravel.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    cmd = { "Artisan", "Laravel", "RouteList", "ModelList" },
+    event = { "VeryLazy" },
+    config = function()
+      require("laravel").setup {
+        features = {
+          routes = true,
+          models = true,
+          notifications = true,
+          commands = true,
+          sail = true,
+        },
+      }
+    end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-neotest/nvim-nio",
+      "olimorris/neotest-phpunit",
+    },
+    event = "VeryLazy",
+    config = function()
+      require("neotest").setup {
+        adapters = {
+          require("neotest-phpunit"),
+        },
+      }
+    end,
+  },
+
   -- == Examples of Adding Plugins ==
 
   {
@@ -57,6 +97,23 @@ return {
     "AstroNvim/astrocore",
     ---@type AstroCoreOpts
     opts = {
+      filetypes = {
+        pattern = {
+          [".*%.blade%.php"] = "blade",
+        },
+      },
+      autocmds = {
+        blade_commentstring = {
+          {
+            event = "FileType",
+            pattern = "blade",
+            desc = "Set commentstring for Blade files",
+            callback = function()
+              vim.bo.commentstring = "{{-- %s --}}"
+            end,
+          },
+        },
+      },
       mappings = {
         n = {
           ["<S-h>"] = { function() require("astrocore.buffer").nav(-vim.v.count1) end, desc = "Previous buffer" },
@@ -135,6 +192,7 @@ return {
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" })
+      luasnip.filetype_extend("blade", { "php", "html" })
 
       -- include the default astronvim config that calls the setup call
       require "astronvim.plugins.configs.luasnip"(plugin, opts)
