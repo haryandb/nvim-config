@@ -65,6 +65,18 @@ return {
   },
 
   {
+    "rasulomaroff/reactive.nvim",
+    event = "UIEnter",
+    opts = {
+      builtin = {
+        cursorline = true,
+        cursor = true,
+        modemsg = true,
+      },
+    },
+  },
+
+  {
     "folke/snacks.nvim",
     opts = {
       picker = {
@@ -150,6 +162,23 @@ return {
   },
 
   "andweeb/presence.nvim",
+  {
+    "iamcco/markdown-preview.nvim",
+    build = function() vim.fn["mkdp#util#install"]() end,
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    keys = {
+      { "<Leader>mp", ":MarkdownPreview<CR>", desc = "Markdown preview" },
+    },
+  },
+  {
+    "andymass/vim-matchup",
+    event = "VeryLazy",
+    init = function()
+      vim.g.matchup_matchparen_deferred = 1
+      vim.g.matchup_matchparen_offscreen = { method = "status" }
+    end,
+  },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
