@@ -65,15 +65,23 @@ return {
   },
 
   {
-    "rasulomaroff/reactive.nvim",
+    "mvllow/modes.nvim",
     event = "UIEnter",
-    opts = {
-      builtin = {
-        cursorline = true,
-        cursor = true,
-        modemsg = true,
-      },
-    },
+    config = function()
+      require("modes").setup {
+        set_cursor = true, -- cursor color per mode
+        set_cursorline = true, -- cursorline per mode
+        set_number = true, -- line numbers follow cursorline
+        set_signcolumn = true, -- signcolumn follows cursorline
+        ignore = {
+          "NvimTree",
+          "TelescopePrompt",
+          "TelescopeResults",
+          "snacks_picker_list",
+          "snacks_picker_input",
+        },
+      }
+    end,
   },
 
   {
