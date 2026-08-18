@@ -1,9 +1,16 @@
 ---@type LazySpec
 return {
   {
-    "projekt0n/github-nvim-theme",
-    name = "github-theme",
+    "catppuccin/nvim",
+    name = "catppuccin",
     lazy = false,
     priority = 1000,
+    opts = {
+      flavour = "latte",
+      background = {
+        light = "latte",
+        dark = "mocha",
+      },
+    },
   },
 }
