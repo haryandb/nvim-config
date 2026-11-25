@@ -54,8 +54,14 @@ return {
     event = "VeryLazy",
     config = function()
       require("neoscroll").setup {
-        easing_function = "quadratic",
-        hide_cursor = true,
+        -- neoscroll >=0.2 memakai key `easing`; `easing_function` lama
+        -- diabaikan diam-diam (jatuh ke gerak linear yang lebih kaku).
+        easing = "quadratic",
+        -- hide_cursor sebelumnya true: neoscroll mengganti guicursor ke
+        -- NeoscrollHiddenCursor (transparan) selama animasi scroll, jadi
+        -- kursor kitty hilang dan cursor_trail tidak tergambar. false =
+        -- kursor tetap terlihat & trail mengikuti setiap langkah scroll.
+        hide_cursor = false,
         stop_eof = true,
         respect_scrolloff = true,
         cursor_scrolls_alone = true,

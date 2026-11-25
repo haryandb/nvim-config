@@ -19,6 +19,16 @@ vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.showbreak = "↳ "
 
+-- Guicursor eksplisit: block di normal/visual/command (trail kitty jadi
+-- kotak solid & kelihatan), beam tipis di insert. Tanpa ini, plugin lain
+-- (atau default nvim) bisa mengganti shape dan trail berubah jadi garis.
+vim.opt.guicursor = {
+  "n-v-c-sm:block",
+  "i-ci-ve:ver25",
+  "r-cr-o:hor20",
+  "a:Cursor/lCursor",
+}
+
 vim.keymap.set('n', '<leader>wn', '<cmd>noa w<CR>', { desc = "Save without formatting" })
 
 local wk_avail, wk = pcall(require, "which-key")
@@ -30,3 +40,16 @@ if wk_avail then
     { "<leader>wn", desc = "Save without formatting" },
   })
 end
+
+-- Pulihkan buffer nvim setelah tmux-resurrect me-restart nvim.
+-- resession sudah autosave per-cwd (astrocore sessions.autosave.cwd),
+-- tinggal dimuat ulang saat nvim start tanpa argumen file.
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = vim.api.nvim_create_augroup("TmuxResurrectSession", { clear = true }),
+  callback = function()
+    if vim.fn.argc() ~= 0 then return end
+    local ok, resession = pcall(require, "resession")
+    if not ok then return end
+    pcall(resession.load, vim.uv.cwd(), { dir = "dirsession", silence_errors = true })
+  end,
+})
