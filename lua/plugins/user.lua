@@ -205,6 +205,17 @@ return {
   {
     "folke/snacks.nvim",
     opts = {
+      -- Render gambar dan diagram Mermaid sebagai gambar inline
+      image = {
+        enabled = true,
+        doc = {
+          enabled = true,
+          inline = true, -- tampil di tempat, bukan floating
+          float = true, -- floating window saat kursor di atas gambar
+          max_width = 80,
+          max_height = 40,
+        },
+      },
       dashboard = {
         preset = {
           header = table.concat({
