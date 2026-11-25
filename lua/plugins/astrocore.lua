@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroCore provides a central place to modify mappings, vim options, autocommands, and more!
 -- Configuration documentation can be found with `:h astrocore`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -50,6 +48,38 @@ return {
         -- configure global vim variables (vim.g)
         -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
         -- This can be found in the `lua/lazy_setup.lua` file
+      },
+    },
+    commands = {
+      PandocPDF = {
+        function()
+          local file = vim.fn.expand "%"
+          if file == "" then
+            vim.notify("No file in buffer", vim.log.levels.WARN)
+            return
+          end
+          vim.cmd "silent write"
+          local out = vim.fn.expand "%:p:r" .. ".pdf"
+          vim.system({ "pandoc", file, "--pdf-engine=xelatex", "--columns=80", "-o", out }, {}, function(res)
+            if res.code == 0 then
+              vim.schedule(function()
+                vim.ui.select({ "Open Preview", "Open in Finder", "Tidak" }, {
+                  prompt = "Pandoc: PDF dibuat -> " .. out,
+                }, function(choice)
+                  if choice == "Open Preview" then
+                    vim.system({ "open", out })
+                  elseif choice == "Open in Finder" then
+                    vim.system({ "open", "-R", out })
+                  end
+                end)
+              end)
+            else
+              vim.notify("Pandoc gagal: " .. (res.stderr or ""), vim.log.levels.ERROR)
+            end
+          end)
+          vim.notify "Pandoc: mengonversi ke PDF..."
+        end,
+        desc = "Convert current file to PDF with pandoc (xelatex)",
       },
     },
     -- Mappings can be configured through AstroCore as well.

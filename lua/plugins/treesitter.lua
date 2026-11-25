@@ -19,6 +19,8 @@ return {
         "json",
         "css",
         "html",
+        "latex",
+        "bibtex",
       },
     },
   },

@@ -32,6 +32,7 @@ return {
       timeout_ms = 20000,
     },
     servers = {
+      "texlab",
       "vtsls",
       "ts_ls",
       "vue_ls",
@@ -39,6 +40,17 @@ return {
       "rust_analyzer",
     },
     config = {
+      texlab = {
+        settings = {
+          texlab = {
+            build = {
+              executable = "latexmk",
+              args = { "-xelatex", "-interaction=nonstopmode", "-synctex=1", "%f" },
+              onSave = false,
+            },
+          },
+        },
+      },
       html = {
         filetypes = { "html", "blade" },
       },
